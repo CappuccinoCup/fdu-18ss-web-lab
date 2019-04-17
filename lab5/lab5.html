@@ -10,7 +10,54 @@
 
    <!-- Custom styles for this template -->
    <link href="lab5.css" rel="stylesheet">
+   <script>
+       products = [];
 
+    function Details(file,product,quantity,price){
+        this.file = file;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
+    Details.prototype.writeDetails = function(){
+        document.write('<td><img class="img-thumbnail" src="images/art/tiny/' + this.file + '" alt="..."></td>');
+        document.write('<td>' + this.product + '</td>');
+        document.write('<td>' + this.quantity + '</td>');
+        document.write('<td>$' + this.price + '</td>');
+        document.write('<td>$' + (this.quantity*this.price) + '</td>');
+    }
+
+
+    function loadDetails(){
+        /* 在此处添加需要展示的商品信息 */
+        products[0] = new Details("116010.jpg","Artist Holding a Thistle",2,500);
+        products[1] = new Details("113010.jpg","Self-portrait in a Straw Hat",1,700);
+    
+    
+        for(var i = 0;i < products.length;i++){
+            document.write('<tr>');
+            products[i].writeDetails();
+            document.write('</tr>');
+        }
+    }
+    function calculate(){
+        var toCalculates = document.getElementsByClassName("toCalculate");
+        var subtotal = 0,tax = 0,shipping = 40,grandTotal = 0;
+    
+        for(var i = 0;i < products.length;i++){
+            subtotal += products[i].quantity * products[i].price;
+        }
+        tax = subtotal / 10;
+        if(subtotal > 1000){
+            shipping = 0;
+        }
+        grandTotal = subtotal + tax + shipping;
+        toCalculates[0].innerHTML = "$" + subtotal;
+        toCalculates[1].innerHTML = "$" + tax;
+        toCalculates[2].innerHTML = "$" + shipping;
+        toCalculates[3].innerHTML = "$" + grandTotal;
+    }   
+   </script>
    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!--[if lt IE 9]>
    <script src="bootstrap3_defaultTheme/assets/js/html5shiv.js"></script>
@@ -157,23 +204,28 @@
          $quantity2 = 1;
          $price2 = 700;
         -->
+        <script>loadDetails();</script>
+
 
          <tr class="success strong">
             <td colspan="4" class="moveRight">Subtotal</td>
-            <td >$1700</td>
+            <td class="toCalculate"></td>
          </tr>
          <tr class="active strong">
             <td colspan="4" class="moveRight">Tax</td>
-            <td>$170</td>
+            <td class="toCalculate"></td>
          </tr>  
          <tr class="strong">
             <td colspan="4" class="moveRight">Shipping</td>
-            <td>$100</td>
+            <td class="toCalculate"></td>
          </tr> 
          <tr class="warning strong text-danger">
             <td colspan="4" class="moveRight">Grand Total</td>
-            <td>$1970</td>
-         </tr>    
+            <td class="toCalculate"></td>
+         </tr>
+         
+         <script>calculate();</script>
+
          <tr >
             <td colspan="4" class="moveRight"><button type="button" class="btn btn-primary" >Continue Shopping</button></td>
             <td><button type="button" class="btn btn-success" >Checkout</button></td>
