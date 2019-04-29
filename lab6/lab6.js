@@ -15,26 +15,17 @@ function setImageChange(){
     images = document.getElementById("thumbnails").getElementsByTagName("img");
     featured = document.getElementById("featured").getElementsByTagName("*");
 
-    images[0].onclick = function(){
-        featured[0].src = imageSrc[0];
-        featured[1].innerHTML = imageName[0];
-    };
-    images[1].onclick = function(){
-        featured[0].src = imageSrc[1];
-        featured[1].innerHTML = imageName[1];
-    };
-    images[2].onclick = function(){
-        featured[0].src = imageSrc[2];
-        featured[1].innerHTML = imageName[2];
-    };
-    images[3].onclick = function(){
-        featured[0].src = imageSrc[3];
-        featured[1].innerHTML = imageName[3];
-    };
-    images[4].onclick = function(){
-        featured[0].src = imageSrc[4];
-        featured[1].innerHTML = imageName[4];
-    };
+
+    for(var i = 0;i < images.length;i++){
+        set = function(number){
+            images[number].onclick = function(){
+                featured[0].src = imageSrc[number];
+                featured[1].innerHTML = imageName[number];
+            }
+        }(i);
+    }/* 使用闭包 + 循环简化代码 */
+    
+    
     featured[0].onmouseover = function(){
         featured[1].style.opacity = "0.8";
         featured[1].style.transition = "1s";
