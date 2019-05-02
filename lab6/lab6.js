@@ -1,4 +1,4 @@
-var imageSrc = [];
+﻿var imageSrc = [];
 imageSrc[0] = "images/medium/5855774224.jpg";
 imageSrc[1] = "images/medium/5856697109.jpg";
 imageSrc[2] = "images/medium/6119130918.jpg";
@@ -20,6 +20,7 @@ function setImageChange(){
         set = function(number){
             images[number].onclick = function(){
                 featured[0].src = imageSrc[number];
+                featured[0].title = imageName[number];
                 featured[1].innerHTML = imageName[number];
             }
         }(i);
