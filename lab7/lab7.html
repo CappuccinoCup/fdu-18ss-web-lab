@@ -2,7 +2,7 @@
 <head>
 <title>Chapter 10</title>
 <link rel="stylesheet" href="lab7.css">
-<script>
+<script src="jquery-3.4.1.js">
 </script>      
 </head>    
 <body class="tiled">
@@ -37,7 +37,62 @@
     </div>
 </main>
 <script>
+    $(document).ready(function(){
+        $("#thumbBox img").click(function(){
+            $("#imgManipulated img").attr("src",this.src.replace("small","medium"));
+            $("#imgManipulated figcaption").html("<em>" + this.alt + "</em> <br>" + this.title);
+            //this是一个html元素而非jquery对象
+        });
+        $("#sliderOpacity").bind("input propertychange",function(){
+            $("#numOpacity").html($("#sliderOpacity").val());
+            $("#imgManipulated img").css({
+                "filter":"opacity(" + $("#sliderOpacity").val() + "%)",
+                "-webkit-filter":"opacity(" + $("#sliderOpacity").val() + "%)"
+            });
+        });
+        $("#sliderSaturation").bind("input propertychange",function(){
+            $("#numSaturation").html($("#sliderSaturation").val());
+            $("#imgManipulated img").css({
+                "filter":"saturate(" + $("#sliderSaturation").val() + "%)",
+                "-webkit-filter":"saturate(" + $("#sliderSaturation").val() + "%)"
+            });
+        });
+        $("#sliderBrightness").bind("input propertychange",function(){
+            $("#numBrightness").html($("#sliderBrightness").val());
+            $("#imgManipulated img").css({
+                "filter":"brightness(" + $("#sliderBrightness").val() + "%)",
+                "-webkit-filter":"brightness(" + $("#sliderBrightness").val() + "%)"
+            });
+        });
+        $("#sliderHue").bind("input propertychange",function(){
+            $("#numHue").html($("#sliderHue").val());
+            $("#imgManipulated img").css({
+                "filter":"hue-rotate(" + $("#sliderHue").val() + "deg)",
+                "-webkit-filter":"hue-rotate(" + $("#sliderHue").val() + "deg)"
+            });
+        });
+        $("#sliderGray").bind("input propertychange",function(){
+            $("#numGray").html($("#sliderGray").val());
+            $("#imgManipulated img").css({
+                "filter":"grayscale(" + $("#sliderGray").val() + "%)",
+                "-webkit-filter":"grayscale(" + $("#sliderGray").val() + "%)"
+            });
+        });
+        $("#sliderBlur").bind("input propertychange",function(){
+            $("#numBlur").html($("#sliderBlur").val());
+            $("#imgManipulated img").css({
+                "filter":"blur(" + $("#sliderBlur").val() + "px)",
+                "-webkit-filter":"blur(" + $("#sliderBlur").val() + "px)"
+            });
+        });
 
+        $("#resetFilters").click(function(){
+            $("#imgManipulated img").css({
+                "filter":"none",
+                "-webkit-filter":"none"
+            });
+        });
+    });
 </script>    
 </body>   
 </html>
