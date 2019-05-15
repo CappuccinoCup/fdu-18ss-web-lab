@@ -95,15 +95,15 @@ $grandTotal = $subtotal + $shipping;
                   <tfoot>
                       <tr class="totals">
                           <td colspan="4">Subtotal</td>
-                          <td>$<?php echo number_format($subtotal,2); ?></td>
+                          <td>$<?php echo number_format($subtotal,2,".",""); ?></td>
                       </tr>
                       <tr class="totals">
                           <td colspan="4">Shipping</td>
-                          <td>$<?php echo number_format($shipping,2); ?></td>
+                          <td>$<?php echo number_format($shipping,2,".",""); ?></td>
                       </tr> 
                       <tr class="grandtotals">
                           <td colspan="4">Grand Total</td>
-                          <td>$<?php echo number_format($grandTotal,2); ?></td>
+                          <td>$<?php echo number_format($grandTotal,2,".",""); ?></td>
                       </tr>                            
                   </tfoot>          
                   <tbody>
