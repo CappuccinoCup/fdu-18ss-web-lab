@@ -42,8 +42,10 @@ include 'travel-data.inc.php';
               /* hint: use array and loop */
               //the next line is an example
               //<a href="list.php?country=Canada" role="button" class="btn btn-default"> Canada</a> 
-
-
+              asort($countries);//名值对数组按值升序排列
+              foreach($countries as $x=>$x_value){
+                  echo "<a href='list.php?country={$x_value}' role='button' class='btn btn-default'> {$x_value}</a>";
+              }      
               ?>
                      
         </div>               
@@ -70,7 +72,16 @@ include 'travel-data.inc.php';
    //              		</div>
    //              	</div>
    //              </a>
-			// </li>
+            // </li>
+            foreach($images as $x=>$x_value){
+                $str = "";
+                $str .= "<li>";
+                $str .= "<a href='detail.php?id=".$x_value["id"]."' class='img-responsive'>";
+                $str .= "<img src='images/square/".$x_value["path"]."' alt='View of Cologne'>";
+                $str .= "<div class='caption'><div class='blur'></div><div class='caption-text'><h1>".$x_value["title"]."</h1></div>";
+                $str .= "</div></a></li>";
+                echo $str;
+            }
           ?>
 
        </ul>       
