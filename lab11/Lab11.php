@@ -1,6 +1,16 @@
 <?php
 //Fill this place
 
+$severname = "localhost";
+$username = "root";
+$password = "11111111";
+$dbname = "travel";
+//连接数据库
+$connect = new mysqli($severname,$username,$password,$dbname);
+if($connect->connect_error){
+  die("连接失败,请修改数据库连接密码。" . $connect->connect_error . "<br>");
+}
+
 //****** Hint ******
 //connect database and fetch data here
 
@@ -23,7 +33,14 @@
     
 
     <link rel="stylesheet" href="css/captions.css" />
-    <link rel="stylesheet" href="css/bootstrap-theme.css" />    
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />   
+
+    <style>
+      img{
+        width:225px;
+        height:225px;
+      }
+    </style> 
 
 </head>
 
@@ -43,6 +60,9 @@
                 <option value="0">Select Continent</option>
                 <?php
                 //Fill this place
+                
+                $continents = "SELECT ContinentCode,ContinentName FROM continents";
+                $result = $connect->query($continents);
 
                 //****** Hint ******
                 //display the list of continents
@@ -58,6 +78,12 @@
                 <option value="0">Select Country</option>
                 <?php 
                 //Fill this place
+
+                $countries = "SELECT ISO,CountryName FROM countries";
+                $result = $connect->query($countries);
+                while($row = $result->fetch_assoc()) {
+                  echo '<option value=' . $row['ISO'] . '>' . $row['CountryName'] . '</option>';
+                }
 
                 //****** Hint ******
                 /* display list of countries */ 
@@ -75,7 +101,33 @@
 		<ul class="caption-style-2">
             <?php 
             //Fill this place
-
+            $imagedetails = "SELECT ImageID,Path,Title,Description FROM imagedetails";
+            if(isset($_GET['title'])){
+              if($_GET['title'] !== ''){
+                $imagedetails .= " WHERE Title='" . $_GET['title'] . "'";
+              }elseif($_GET['continent'] !== "0" && $_GET['country'] !== "0"){
+                $imagedetails .= " WHERE ContinentCode='" . $_GET['continent'] ."' AND CountryCodeISO='" . $_GET['country'] ."'";
+              }elseif($_GET['continent'] === "0" && $_GET['country'] !== "0"){
+                $imagedetails .= " WHERE CountryCodeISO='" . $_GET['country'] ."'";
+              }elseif($_GET['continent'] !== "0" && $_GET['country'] === "0"){
+                $imagedetails .= " WHERE ContinentCode='" . $_GET['continent'] . "'";
+              }
+            }
+            $result = $connect->query($imagedetails);
+            if ($result->num_rows > 0){
+              while($row = $result->fetch_assoc()) {
+                $str = '<li>';
+                $str .= '<a href="detail.php?id=' . $row['ImageID'] . '" class="img-responsive">';
+                $str .= '<img src="images/square-medium/' . $row['Path'] . '" alt="' . $row['Title'] . '">';
+                $str .= '<div class="caption"><div class="blur"></div><div class="caption-text">';
+                $str .= '<p>' . $row['Description'] . '</p>';
+                $str .= '</div></div></a></li>';
+                echo $str;
+              }
+            }else{
+              echo '<h2 class="text-center">无结果！</h2>';
+            }
+            
             //****** Hint ******
             /* use while loop to display images that meet requirements ... sample below ... replace ???? with field data
             <li>
@@ -93,9 +145,9 @@
             ?>
        </ul>       
 
-      
+       
     </main>
-    
+    <br>
     <footer>
         <div class="container-fluid">
                     <div class="row final">
